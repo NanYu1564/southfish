@@ -1,11 +1,11 @@
 --Kenny泛滥外部汉化脚本我的哔站UID:1531514159（删了这个死妈死爹死全家）
 local Translations = {
-   --["Home"] = "主页",
+   ["Home"] = "主页",
     ["Raid"] = "突袭",
     ["Webhook"] = "网络钩子",
     ["Misc"] = "杂项",
     ["Credit"] = "鸣谢",
-    ["Settings"] = "设置"
+    ["Settings"] = "设置",
     ["Home"] = "主页",
     ["Setting"] = "设置",
     ["Collect Obby Luck"] = "收集obby幸运物",
@@ -90,76 +90,6 @@ local function setupTranslationEngine()
                             if translatedText ~= text then
                                 gui.Text = translatedText
                                 translated[gui] = true
-                            end
-                        end
-                    end)
-                end
-            end
-            
-            local player = game:GetService("Players").LocalPlayer
-            if player and player:FindFirstChild("PlayerGui") then
-                for _, gui in ipairs(player.PlayerGui:GetDescendants()) do
-                    if (gui:IsA("TextLabel") or gui:IsA("TextButton") or gui:IsA("TextBox")) and not translated[gui] then
-                        pcall(function()
-                            local text = gui.Text
-                            if text and text ~= "" then
-                                local translatedText = translateText(text)
-                                if translatedText ~= text then
-                                    gui.Text = translatedText
-                                    translated[gui] = true
-                                end
-                            end
-                        end)
-                    end
-                end
-            end
-        end
-        
-        local function setupDescendantListener(parent)
-            parent.DescendantAdded:Connect(function(descendant)
-                if descendant:IsA("TextLabel") or descendant:IsA("TextButton") or descendant:IsA("TextBox") then
-                    task.wait(0.1)
-                    pcall(function()
-                        local text = descendant.Text
-                        if text and text ~= "" then
-                            local translatedText = translateText(text)
-                            if translatedText ~= text then
-                                descendant.Text = translatedText
-                            end
-                        end
-                    end)
-                end
-            end)
-        end
-        
-        pcall(setupDescendantListener, game:GetService("CoreGui"))
-        local player = game:GetService("Players").LocalPlayer
-        if player and player:FindFirstChild("PlayerGui") then
-            pcall(setupDescendantListener, player.PlayerGui)
-        end
-        
-        while true do
-            scanAndTranslate()
-            task.wait(3)
-        end
-    end
-end
-
-task.wait(2)
-
-setupTranslationEngine()
-
-local success, err = pcall(function()
---这下面填加载外部脚本
-loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBossScript/BeeconHub/main/BeeconHub"))()
-
-
-
-end)
-
-if not success then
-    warn("加载失败:", err)
-end
                             end
                         end
                     end)
